@@ -1,13 +1,9 @@
-# ----------------------------------------------------------------------------
-#  CMake file for tinyxml. See root CMakeLists.txt
-#
-# ----------------------------------------------------------------------------
+cmake_minimum_required(VERSION 3.3)
 set(TINYXML_LIBRARY tinyxml)
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake" )
 
-project(${TINYXML_LIBRARY} CXX)
+project(ubitrack_tinyxml CXX)
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
+include(GNUInstallDirs)
 
 # Version of TINYXML API.
 SET( TINYXML_MAJOR_VERSION 2 )
@@ -31,13 +27,19 @@ FILE(GLOB TINYXML_HEADERS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
 
 # TINYXML shared library definition
 ADD_LIBRARY(${TINYXML_LIBRARY} STATIC ${TINYXML_SRCS} ${TINYXML_HEADERS})
-set_target_properties(${TINYXML_LIBRARY} PROPERTIES DEFINE_SYMBOL TIXML_USE_STL)
+
+target_include_directories(${TINYXML_LIBRARY} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+    PRIVATE src)
+
+set_property(TARGET ${TINYXML_LIBRARY} PROPERTY COMPILE_DEFINITIONS TIXML_USE_STL)
 
 # make the name of debug libraries end in _d.
-SET_TARGET_PROPERTIES( ${TINYXML_LIBRARY} PROPERTIES DEBUG_POSTFIX "_d" )
+set_property(TARGET  ${TINYXML_LIBRARY} PROPERTY DEBUG_POSTFIX "_d" )
 
 # set the version of the library
-SET_TARGET_PROPERTIES( ${TINYXML_LIBRARY} PROPERTIES VERSION ${TINYXML_FULL_VERSION} )
+set_property(TARGET  ${TINYXML_LIBRARY} PROPERTY VERSION ${TINYXML_FULL_VERSION} )
 
 # set fPIC
 set_property(TARGET ${TINYXML_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)
@@ -46,12 +48,11 @@ if(WIN32)
   add_definitions("-D_LIB")
   add_definitions("-D_CRT_SECURE_NO_DEPRECATE")
 endif(WIN32)
-add_definitions("-DTIXML_USE_STL")
 
 set_target_properties(${TINYXML_LIBRARY} PROPERTIES
         OUTPUT_NAME ${TINYXML_LIBRARY}
-        DEBUG_POSTFIX "${UBITRACK_DEBUG_POSTFIX}"
-        ARCHIVE_OUTPUT_DIRECTORY ${3P_LIBRARY_OUTPUT_PATH}
+        DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}"
+        ARCHIVE_OUTPUT_DIRECTORY lib
     )
 
 install(TARGETS ${TINYXML_LIBRARY}
@@ -59,15 +60,12 @@ install(TARGETS ${TINYXML_LIBRARY}
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
-  INCLUDES DESTINATION include
  )
+
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(EXPORT library_targets
   NAMESPACE ubitrack_tinyxml::
   DESTINATION lib/cmake/ubitrack_tinyxml)
-
-install(FILES ubitrack_tinyxml-config.cmake
-  DESTINATION lib/cmake/ubitrack_tinyxml
-)
 
 

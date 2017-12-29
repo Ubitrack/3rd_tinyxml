@@ -10,19 +10,10 @@ class UbitrackboostbindingsConan(ConanFile):
     description = "TinyXML is a simple, small, C++ XML parser that can be easily integrating into other programs."
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
     exports_sources = "include/*", "src/*", "CMakeLists.txt"
-
-    def imports(self):
-        if self.options.shared:
-            self.copy(pattern="*.dll", dst="bin", src="bin") # From bin to bin
-            self.copy(pattern="*.dylib*", dst="bin", src="lib") 
-
 
     def build(self):
         cmake = CMake(self)
-        cmake.definitions["BUILD_SHARED_LIBS"] = self.options.shared
         cmake.configure()
         cmake.build()
         cmake.install()

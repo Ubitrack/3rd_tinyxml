@@ -26,9 +26,6 @@ If you handle multiple dependencies in your project is better to add a *conanfil
     [requires]
     ubitrack_tinyxml/2.5.3@ulricheck/stable
 
-    [options]
-    ubitrack_tinyxml:shared=true # false
-    
     [generators]
     txt
     cmake

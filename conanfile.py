@@ -21,5 +21,5 @@ class UbitrackboostbindingsConan(ConanFile):
     def package_info(self):
         suffix = ""
         if self.settings.build_type == "Debug":
-            suffix = "d"
+            suffix = "_d"
         self.cpp_info.libs.append("tinyxml%s" % (suffix,))

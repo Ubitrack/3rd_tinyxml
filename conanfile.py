@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 import os
 
 
-class UbitrackboostbindingsConan(ConanFile):
+class UbitracktinyxmlConan(ConanFile):
     name = "ubitrack_tinyxml"
     version = "2.5.3"
     license = "http://www.grinninglizard.com/tinyxml/"

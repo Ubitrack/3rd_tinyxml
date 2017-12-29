@@ -1,6 +1,6 @@
 # conan-zlib
 
-[Conan.io](https://conan.io) package for ZLIB library. 
+[Conan.io](https://conan.io) package for tinyxml library. 
 
 The packages generated with this **conanfile** can be found in [conan.io](https://conan.io/source/ubitrack_tinyxml/2.5.3/ulricheck/stable).
 

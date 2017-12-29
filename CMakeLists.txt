@@ -51,7 +51,6 @@ endif(WIN32)
 
 set_target_properties(${TINYXML_LIBRARY} PROPERTIES
         OUTPUT_NAME ${TINYXML_LIBRARY}
-        DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}"
         ARCHIVE_OUTPUT_DIRECTORY lib
     )
 

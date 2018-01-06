@@ -28,6 +28,9 @@ class UbitrackboostbindingsConan(ConanFile):
         cmake.install()
 
     def package_info(self):
+        self.cpp_info.defines.append("HAVE_TINYXML")
+        self.cpp_info.defines.append("TIXML_USE_STL")
+        
         suffix = ""
         if self.settings.build_type == "Debug":
             suffix = "d"

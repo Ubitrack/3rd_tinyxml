@@ -1,8 +1,6 @@
-# conan-zlib
+# ubitrack-tinyxml
 
 [Conan.io](https://conan.io) package for tinyxml library. 
-
-The packages generated with this **conanfile** can be found in [conan.io](https://conan.io/source/ubitrack_tinyxml/2.5.3/ulricheck/stable).
 
 ## Build packages
 
@@ -11,20 +9,20 @@ The packages generated with this **conanfile** can be found in [conan.io](https:
     
 ## Upload packages to server
 
-    $ conan upload ubitrack_tinyxml/2.5.3@ulricheck/stable --all
+    $ conan upload ubitrack_tinyxml/2.5.3@camposs/stable --all
     
 ## Reuse the packages
 
 ### Basic setup
 
-    $ conan install ubitrack_tinyxml/2.5.3@ulricheck/stable
+    $ conan install ubitrack_tinyxml/2.5.3@camposs/stable
     
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
     
     [requires]
-    ubitrack_tinyxml/2.5.3@ulricheck/stable
+    ubitrack_tinyxml/2.5.3@camposs/stable
 
     [generators]
     txt

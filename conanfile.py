@@ -10,7 +10,7 @@ class UbitracktinyxmlConan(ConanFile):
     description = "TinyXML is a simple, small, C++ XML parser that can be easily integrating into other programs."
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-    exports_sources = "include/*", "src/*", "CMakeLists.txt"
+    exports_sources = "include/*", "src/*", "CMakeLists.txt", "tinyxmlConfig.cmake"
 
     def build(self):
         cmake = CMake(self)

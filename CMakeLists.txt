@@ -33,38 +33,48 @@ target_include_directories(${TINYXML_LIBRARY} PUBLIC
     $<INSTALL_INTERFACE:include>
     PRIVATE src)
 
-set_property(TARGET ${TINYXML_LIBRARY} PROPERTY COMPILE_DEFINITIONS TIXML_USE_STL)
+set_target_properties(${TINYXML_LIBRARY} PROPERTY COMPILE_DEFINITIONS TIXML_USE_STL)
 
 # make the name of debug libraries end in _d.
-set_property(TARGET  ${TINYXML_LIBRARY} PROPERTY DEBUG_POSTFIX "_d" )
+set_target_properties(${TINYXML_LIBRARY} PROPERTY DEBUG_POSTFIX "_d" )
 
 # set the version of the library
-set_property(TARGET  ${TINYXML_LIBRARY} PROPERTY VERSION ${TINYXML_FULL_VERSION} )
+set_target_properties(${TINYXML_LIBRARY} PROPERTY VERSION ${TINYXML_FULL_VERSION} )
 
 # set fPIC
-set_property(TARGET ${TINYXML_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_target_properties(${TINYXML_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 if(WIN32)
-  add_definitions("-D_LIB")
-  add_definitions("-D_CRT_SECURE_NO_DEPRECATE")
+  target_compile_definitions(${TINYXML_LIBRARY} PUBLIC "_LIB")
+  target_compile_definitions(${TINYXML_LIBRARY} PUBLIC "_CRT_SECURE_NO_DEPRECATE")
 endif(WIN32)
 
 set_target_properties(${TINYXML_LIBRARY} PROPERTIES
         OUTPUT_NAME ${TINYXML_LIBRARY}
-        ARCHIVE_OUTPUT_DIRECTORY lib
+        ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_INSTALL_LIBDIR}
     )
 
 install(TARGETS ${TINYXML_LIBRARY}
-  EXPORT library_targets
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
+  EXPORT "tinyxmlTargets"
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
  )
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(EXPORT library_targets
-  NAMESPACE ubitrack_tinyxml::
-  DESTINATION lib/cmake/ubitrack_tinyxml)
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file("${CMAKE_CURRENT_SOURCE_DIR}/tinyxmlConfigVersion.cmake"
+  VERSION ${TINYXML_FULL_VERSION}
+  COMPATIBILITY SameMajorVersion)
+
+install (FILES "tinyxmlConfig.cmake" "tinyxmlConfigVersion.cmake"
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/tinyxml)
+
+install(EXPORT ${TINYXML_LIBRARY}Targets
+  FILE tinyxmlTargets.cmake
+  NAMESPACE tinyxml::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/tinyxml
+)
 
 

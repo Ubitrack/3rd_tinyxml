@@ -33,16 +33,16 @@ target_include_directories(${TINYXML_LIBRARY} PUBLIC
     $<INSTALL_INTERFACE:include>
     PRIVATE src)
 
-set_target_properties(${TINYXML_LIBRARY} PROPERTY COMPILE_DEFINITIONS TIXML_USE_STL)
+target_compile_definitions(${TINYXML_LIBRARY} PUBLIC  TIXML_USE_STL)
 
 # make the name of debug libraries end in _d.
-set_target_properties(${TINYXML_LIBRARY} PROPERTY DEBUG_POSTFIX "_d" )
+set_target_properties(${TINYXML_LIBRARY} PROPERTIES DEBUG_POSTFIX "_d" )
 
 # set the version of the library
-set_target_properties(${TINYXML_LIBRARY} PROPERTY VERSION ${TINYXML_FULL_VERSION} )
+set_target_properties(${TINYXML_LIBRARY} PROPERTIES VERSION ${TINYXML_FULL_VERSION} )
 
 # set fPIC
-set_target_properties(${TINYXML_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_target_properties(${TINYXML_LIBRARY} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 if(WIN32)
   target_compile_definitions(${TINYXML_LIBRARY} PUBLIC "_LIB")
